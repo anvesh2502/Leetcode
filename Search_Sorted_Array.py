@@ -63,8 +63,3 @@ class Solution(object):
             return self.binary_search(nums,0,div-1,target)
 
         return self.binary_search(nums,div,len(nums)-1,target)
-
-
-
-
-        
