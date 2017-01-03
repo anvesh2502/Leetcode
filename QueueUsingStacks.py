@@ -12,15 +12,24 @@ class Queue(object):
         :type x: int
         :rtype: nothing
         """
-        if self.empty() :
+
+
+
+        if len(self.stack1)==0 and len(self.stack2)==0 :
             self.stack1.append(x)
             return
 
         if len(self.stack1)==0 :
             self.stack2.append(x)
+            return
 
-        else :
-            self.stack1.append(x)
+        self.stack1.append(x)
+
+
+
+
+
+
 
 
 
@@ -30,9 +39,9 @@ class Queue(object):
         """
         :rtype: nothing
         """
-
-        if self.empty() :
+        if len(self.stack1)==0 and len(self.stack2)==0 :
             return
+
 
         if len(self.stack1)==0 :
 
@@ -41,6 +50,9 @@ class Queue(object):
 
             self.stack2.pop()
 
+            while len(self.stack1)!=0 :
+                self.stack2.append(self.stack1.pop())
+
         else :
 
             while len(self.stack1)!=1 :
@@ -48,8 +60,8 @@ class Queue(object):
 
             self.stack1.pop()
 
-
-
+            while len(self.stack2)!=0 :
+                self.stack1.append(self.stack2.pop())
 
 
 
@@ -58,26 +70,33 @@ class Queue(object):
         """
         :rtype: int
         """
-        if self.empty() :
-            return None
+        if len(self.stack1)==0 and len(self.stack2)==0 :
+            return -1
 
-        r=0
+        r=-1
+        print self.stack1,self.stack2
 
         if len(self.stack1)==0 :
 
             while len(self.stack2)!=1 :
                 self.stack1.append(self.stack2.pop())
 
-            r=self.stack2.pop()
-            self.stack1.append(r)
+            r=self.stack2[-1]
+
+            while len(self.stack1)!=0 :
+                self.stack2.append(self.stack1.pop())
+
+            self.stack2.append(r)
 
         else :
 
             while len(self.stack1)!=1 :
                 self.stack2.append(self.stack1.pop())
 
-            r=self.stack1.pop()
-            self.stack2.append(r)
+            r=self.stack1[-1]
+
+            while len(self.stack2)!=0 :
+                self.stack1.append(self.stack2.pop())
 
 
         return r
@@ -91,16 +110,3 @@ class Queue(object):
         """
 
         return len(self.stack1)==0 and len(self.stack2)==0
-
-
-
-
-
-queue=Queue()
-queue.push(1)
-queue.push(2)
-queue.push(3)
-queue.push(4)
-print queue.peek()
-queue.pop()
-print queue.peek()
